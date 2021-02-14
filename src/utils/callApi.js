@@ -1,48 +1,44 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
-export const getLocationRandom = async ({
-  URLLocationRandom,
-  setLocationRandom,
-}) => {
+export const getLocationRandom = async ({ URLLocationRandom, setLocation }) => {
   try {
     const res = await axios.get(URLLocationRandom);
-    setLocationRandom({
+    setLocation({
       name: res.data.name,
       type: res.data.type,
       dimension: res.data.dimension,
-      numberOfResidents: res.data.residents,
+      arrayUrlResidents: res.data.residents,
     });
   } catch {
     console.error("error");
   }
 };
 
-export const getResident = async ({ URLResident, setResident, resident }) => {
+export const getResident = async ({ URLResidents, setResidents }) => {
   try {
-    const res = await axios.get(URLResident);
-    setResident([
-      {
-        residentName: res.data.name,
-        image: res.data.image,
-        status: res.data.status,
-        species: res.data.species,
-        gender: res.data.gender,
-        origin: res.data.origin,
-        episode: res.data.episode,
-      },
-    ]);
-    console.log(resident);
+    const res = await axios.get(URLResidents);
+    setResidents(res.data);
   } catch {
     console.error("error");
   }
 };
 
-// export const getResident = async ({ URLResident }) => {
-//   console.log(`URL: ${URLResident}`);
-//   try {
-//     const res = await axios.get(URLResident);
-//     console.log(res);
-//   } catch {
-//     console.error("error");
-//   }
-// };
+export const getNewLocation = async ({ URLNewLocation, setLocation }) => {
+  try {
+    const res = await axios.get(URLNewLocation);
+    setLocation({
+      name: res.data.results[0].name,
+      type: res.data.results[0].type,
+      dimension: res.data.results[0].dimension,
+      arrayUrlResidents: res.data.results[0].residents,
+    });
+  } catch (error) {
+    console.error(error.response.data.error);
+    toast(error.response.data.error, {
+      type: "default",
+      autoClose: 3000,
+      hideProgressBar: true,
+    });
+  }
+};

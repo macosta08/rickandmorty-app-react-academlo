@@ -1,28 +1,44 @@
 import React, { useEffect, useState } from "react";
-import { getLocationRandom } from "../../utils/callApi";
-import { URLLocationRandom } from "../../utils/urlApi";
+import { getLocationRandom, getNewLocation } from "../../utils/callApi";
+import { URLLocationRandom, URLSearchLocation } from "../../utils/urlApi";
 import { LocationInfo } from "../locationInfo/LocationInfo";
 import { ResidentContainer } from "../residentContainer/ResidentContainer";
+import { SearchBox } from "../searchBox/SearchBox";
 
 export const LocationContainer = () => {
-  const [locationRandom, setLocationRandom] = useState({
+  const [location, setLocation] = useState({
     name: "",
     type: "",
     dimension: "",
-    numberOfResidents: [],
+    arrayUrlResidents: [],
   });
-
+  const [searchInputLocation, setSearchInputLocation] = useState("");
+  const [planet, setPlanet] = useState("");
   const [loading, setLoading] = useState(true);
-  const { name, type, dimension, numberOfResidents } = locationRandom;
+  const { name, type, dimension, arrayUrlResidents } = location;
 
   useEffect(() => {
-    getLocationRandom({ URLLocationRandom, setLocationRandom });
+    getLocationRandom({ URLLocationRandom, setLocation });
     setLoading(false);
   }, []);
 
+  const handleSubmitLocation = (e) => {
+    e.preventDefault();
+    const planet = searchInputLocation.trim();
+    const URLNewLocation = URLSearchLocation + planet;
+
+    if (planet != "") getNewLocation({ URLNewLocation, setLocation });
+    setSearchInputLocation("");
+  };
+
   return (
     <div>
-      <h2>LocationContainer</h2>
+      <SearchBox
+        setSearchInputLocation={setSearchInputLocation}
+        searchInputLocation={searchInputLocation}
+        handleSubmitLocation={handleSubmitLocation}
+      />
+      
       {loading && <p>Loading...</p>}
       {!loading && (
         <div>
@@ -30,12 +46,12 @@ export const LocationContainer = () => {
             name={name}
             type={type}
             dimension={dimension}
-            numberOfResidents={numberOfResidents}
+            arrayUrlResidents={arrayUrlResidents}
           />
           <div>
             <ResidentContainer
               name={name}
-              numberOfResidents={numberOfResidents}
+              arrayUrlResidents={arrayUrlResidents}
             />
           </div>
         </div>

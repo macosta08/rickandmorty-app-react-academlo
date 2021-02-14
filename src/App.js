@@ -1,14 +1,16 @@
 import React from "react";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import { LocationContainer } from "./components/locationContainer/LocationContainer";
 
 function App() {
   return (
     <div>
-      <header className="App-header">
+      <div>
         <LocationContainer />
-      </header>
+      </div>
+      <ToastContainer />
     </div>
   );
 }
