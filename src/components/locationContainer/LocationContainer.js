@@ -38,23 +38,22 @@ export const LocationContainer = () => {
         searchInputLocation={searchInputLocation}
         handleSubmitLocation={handleSubmitLocation}
       />
-      
+
       {loading && <p>Loading...</p>}
       {!loading && (
-        <div>
+        <>
           <LocationInfo
             name={name}
             type={type}
             dimension={dimension}
             arrayUrlResidents={arrayUrlResidents}
           />
-          <div>
-            <ResidentContainer
-              name={name}
-              arrayUrlResidents={arrayUrlResidents}
-            />
-          </div>
-        </div>
+
+          <ResidentContainer
+            name={name}
+            arrayUrlResidents={arrayUrlResidents}
+          />
+        </>
       )}
     </div>
   );
