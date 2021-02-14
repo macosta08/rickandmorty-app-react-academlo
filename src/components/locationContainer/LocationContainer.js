@@ -4,7 +4,7 @@ import { URLLocationRandom, URLSearchLocation } from "../../utils/urlApi";
 import { LocationInfo } from "../locationInfo/LocationInfo";
 import { ResidentContainer } from "../residentContainer/ResidentContainer";
 import { SearchBox } from "../searchBox/SearchBox";
-
+import "./locationContainer.css";
 export const LocationContainer = () => {
   const [location, setLocation] = useState({
     name: "",
@@ -39,16 +39,21 @@ export const LocationContainer = () => {
         handleSubmitLocation={handleSubmitLocation}
       />
 
-      {loading && <p>Loading...</p>}
+      {loading && (
+        <div class="spinner-border text-light" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      )}
       {!loading && (
         <>
-          <LocationInfo
-            name={name}
-            type={type}
-            dimension={dimension}
-            arrayUrlResidents={arrayUrlResidents}
-          />
-
+          <main role="main" className="container container-loc">
+            <LocationInfo
+              name={name}
+              type={type}
+              dimension={dimension}
+              arrayUrlResidents={arrayUrlResidents}
+            />
+          </main>
           <ResidentContainer
             name={name}
             arrayUrlResidents={arrayUrlResidents}

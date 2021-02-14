@@ -7,7 +7,6 @@ export const ResidentInfo = ({dataResident}) => {
 			image,
 			status,
 			species,
-			gender,
 			origin,
 			episode,
 		  } = dataResident; 
