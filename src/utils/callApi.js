@@ -1,6 +1,15 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
+const handleError = (error) => {
+  console.error(error.response.data.error);
+  toast(error.response.data.error, {
+    type: "dark",
+    autoClose: 3000,
+    position: "top-center",
+  });
+};
+
 export const getLocationRandom = async ({ URLLocationRandom, setLocation }) => {
   try {
     const res = await axios.get(URLLocationRandom);
@@ -10,8 +19,8 @@ export const getLocationRandom = async ({ URLLocationRandom, setLocation }) => {
       dimension: res.data.dimension,
       arrayUrlResidents: res.data.residents,
     });
-  } catch {
-    console.error("error");
+  } catch (error) {
+    handleError(error);
   }
 };
 
@@ -19,8 +28,8 @@ export const getResident = async ({ URLResidents, setResidents }) => {
   try {
     const res = await axios.get(URLResidents);
     setResidents(res.data);
-  } catch {
-    console.error("error");
+  } catch (error) {
+    handleError(error);
   }
 };
 
@@ -34,11 +43,6 @@ export const getNewLocation = async ({ URLNewLocation, setLocation }) => {
       arrayUrlResidents: res.data.results[0].residents,
     });
   } catch (error) {
-    console.error(error.response.data.error);
-    toast(error.response.data.error, {
-      type: "default",
-      autoClose: 3000,
-      hideProgressBar: true,
-    });
+    handleError(error);
   }
 };

@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { getLocationRandom, getNewLocation } from "../../utils/callApi";
-import { URLLocationRandom, URLSearchLocation } from "../../utils/urlApi";
+import {
+  getSearchLocationUrl,
+  URLLocationRandom,
+  URLSearchLocation,
+} from "../../utils/urlApi";
 import { LocationInfo } from "../locationInfo/LocationInfo";
 import { ResidentContainer } from "../residentContainer/ResidentContainer";
 import { SearchBox } from "../searchBox/SearchBox";
@@ -13,7 +17,6 @@ export const LocationContainer = () => {
     arrayUrlResidents: [],
   });
   const [searchInputLocation, setSearchInputLocation] = useState("");
-  const [planet, setPlanet] = useState("");
   const [loading, setLoading] = useState(true);
   const { name, type, dimension, arrayUrlResidents } = location;
 
@@ -25,7 +28,7 @@ export const LocationContainer = () => {
   const handleSubmitLocation = (e) => {
     e.preventDefault();
     const planet = searchInputLocation.trim();
-    const URLNewLocation = URLSearchLocation + planet;
+    const URLNewLocation = getSearchLocationUrl(planet);
 
     if (planet != "") getNewLocation({ URLNewLocation, setLocation });
     setSearchInputLocation("");
@@ -40,8 +43,8 @@ export const LocationContainer = () => {
       />
 
       {loading && (
-        <div class="spinner-border text-light" role="status">
-          <span class="visually-hidden">Loading...</span>
+        <div className="spinner-border text-light" role="status">
+          <span className="visually-hidden">Loading...</span>
         </div>
       )}
       {!loading && (

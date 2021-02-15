@@ -4,7 +4,6 @@ import { getMultipleCharactersUrl } from '../../utils/urlApi';
 import { Pagination } from '../pagination/Pagination';
 import { ResidentInfo } from '../residentInfo/ResidentInfo';
 import './residentContainer.css';
-
 export const ResidentContainer = ({ name, arrayUrlResidents }) => {
 	const [residents, setResidents] = useState([]);
 	const [page, setPage] = useState(1);
@@ -13,7 +12,7 @@ export const ResidentContainer = ({ name, arrayUrlResidents }) => {
 	useEffect(() => {
 		setResidents([]);
 		setAmountPage(0);
-		if( name != '' && arrayUrlResidents.length > 0 ){
+		if( arrayUrlResidents.length > 0 ){
 			const URLResidents = getMultipleCharactersUrl(
 				arrayUrlResidents,
 				page
@@ -33,16 +32,14 @@ export const ResidentContainer = ({ name, arrayUrlResidents }) => {
 
 	return (
 		<div>
-		<div className='card-container'>
-			{residentInfo}
-		</div>
+			<div className='card-container'>
+				{residentInfo}
+			</div>
 			{amountPage > 1 && 
 			<footer className='blog-footer justify-content-center'>
 				<Pagination amountPage={amountPage} changePageNumber={changePageNumber}/>
 			</footer>	
-			}	
-		
+			}
 		</div>
-
 	)
 }
