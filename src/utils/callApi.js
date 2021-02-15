@@ -1,4 +1,5 @@
 import axios from "axios";
+import { URLapi } from "./urlApi";
 import { toast } from "react-toastify";
 
 const handleError = (error) => {
@@ -42,6 +43,25 @@ export const getNewLocation = async ({ URLNewLocation, setLocation }) => {
       dimension: res.data.results[0].dimension,
       arrayUrlResidents: res.data.results[0].residents,
     });
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const getAllLocationNames = async ({ setLocationNames }) => {
+  const URLLocation = `${URLapi}location/`;
+  let locations = [];
+  try {
+    const res = await axios.get(URLLocation);
+    const { pages } = res.data.info;
+    for (let page = 1; page <= pages; page++) {
+      const res = await axios.get(`${URLLocation}?page=${page}`);
+      res.data.results.map((loc) => {
+        const { name } = loc;
+        locations.push(name);
+      });
+    }
+    setLocationNames(locations);
   } catch (error) {
     handleError(error);
   }

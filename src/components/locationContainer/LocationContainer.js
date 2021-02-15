@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { getLocationRandom, getNewLocation } from "../../utils/callApi";
 import {
-  getSearchLocationUrl,
-  URLLocationRandom,
-  URLSearchLocation,
-} from "../../utils/urlApi";
+  getAllLocationNames,
+  getLocationRandom,
+  getNewLocation,
+} from "../../utils/callApi";
+import { getSearchLocationUrl, URLLocationRandom } from "../../utils/urlApi";
 import { LocationInfo } from "../locationInfo/LocationInfo";
 import { ResidentContainer } from "../residentContainer/ResidentContainer";
 import { SearchBox } from "../searchBox/SearchBox";
@@ -16,12 +16,14 @@ export const LocationContainer = () => {
     dimension: "",
     arrayUrlResidents: [],
   });
+  const [locationNames, setLocationNames] = useState([]);
   const [searchInputLocation, setSearchInputLocation] = useState("");
   const [loading, setLoading] = useState(true);
   const { name, type, dimension, arrayUrlResidents } = location;
 
   useEffect(() => {
     getLocationRandom({ URLLocationRandom, setLocation });
+    getAllLocationNames({ setLocationNames });
     setLoading(false);
   }, []);
 
@@ -40,6 +42,7 @@ export const LocationContainer = () => {
         setSearchInputLocation={setSearchInputLocation}
         searchInputLocation={searchInputLocation}
         handleSubmitLocation={handleSubmitLocation}
+        locationNames={locationNames}
       />
 
       {loading && (
